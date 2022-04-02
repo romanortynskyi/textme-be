@@ -24,6 +24,7 @@ const userService = require('./modules/user/user.service');
   });
 
   const server = new ApolloServer({
+    introspection: true,
     schema: applyMiddleware(schema, permissions),
     resolvers,
     context: async ({ req }) => {
