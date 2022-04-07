@@ -1,8 +1,6 @@
 const DB_COLLECTIONS_NAMES = {
   USER: 'User',
-  LANGUAGE: 'Language',
-  CATEGORY: 'Category',
-  TRANSLATIONS: 'Translations',
+  CONTACT: 'Contact',
 };
 
 module.exports = {

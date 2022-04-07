@@ -1,7 +1,7 @@
 const bcryptClient = require('../../client/bcrypt-client');
 const jwtClient = require('../../client/jwt-client');
 const RuleError = require('../../errors/rule.error');
-const User = require('./user.model');
+const User = require('../../models/user.model');
 const {
   USER_ALREADY_EXISTS,
   USER_NOT_FOUND,
@@ -13,19 +13,16 @@ const filterHelper = require('../../helpers/filter-helper');
 
 class UserService {
   async signUp(input) {
-    const { email, password } = input;
+    const { phoneNumber } = input;
 
-    const candidate = await User.findOne({ email }).exec();
+    const candidate = await User.findOne({ phoneNumber }).exec();
 
     if (candidate) {
       throw new RuleError(USER_ALREADY_EXISTS, BAD_REQUEST);
     }
 
-    const encryptedPassword = await bcryptClient.hashPassword(password, 12);
-
     const user = await User.create({
       ...input,
-      password: encryptedPassword,
     });
 
     const token = jwtClient.generateAccessToken({ userId: user._id });
@@ -35,20 +32,11 @@ class UserService {
   }
 
   async login(input) {
-    const { email, password } = input;
+    const { phoneNumber } = input;
 
-    const user = await User.findOne({ email }).exec();
+    const user = await User.findOne({ phoneNumber }).exec();
 
     if (!user) {
-      throw new RuleError(WRONG_CREDENTIALS, BAD_REQUEST);
-    }
-
-    const match = await bcryptClient.comparePassword(
-      password,
-      user.password,
-    );
-
-    if (!match) {
       throw new RuleError(WRONG_CREDENTIALS, BAD_REQUEST);
     }
 

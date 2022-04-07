@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const {
   DB_COLLECTIONS_NAMES: { USER: USER_DB },
-} = require('../../consts/db-collection-names');
+} = require('../consts/db-collection-names');
 const {
   roles: { USER, ADMIN },
-} = require('../../consts');
+} = require('../consts');
 
 const userSchema = new mongoose.Schema({
   firstName: {

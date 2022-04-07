@@ -17,24 +17,16 @@ const createUserValidator = Joi.object({
     .trim()
     .regex(userNameRegExp)
     .required(),
-  email: Joi.string()
+  phoneNumber: Joi.string()
     .trim()
-    .email()
-    .required(),
-  password: Joi.string()
-    .trim()
-    .regex(passwordRegExp)
+    .regex(numberRegExp)
     .required(),
 });
 
 const loginUserValidator = Joi.object({
-  email: Joi.string()
+  phoneNumber: Joi.string()
     .trim()
-    .email()
-    .required(),
-  password: Joi.string()
-    .trim()
-    .regex(passwordRegExp)
+    .regex(numberRegExp)
     .required(),
 });
 
