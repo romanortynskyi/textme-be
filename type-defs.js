@@ -12,16 +12,29 @@ const {
   contactQueries,
   contactMutations,
 } = require('./modules/contact/contact.graphql');
+const {
+  roomTypes,
+  roomInputs,
+  roomQueries,
+  roomMutations,
+} = require('./modules/room/room.graphql');
 
 
 const { skip, limit } = defaultPaginationParams;
 
 const typeDefs = gql`
+  type Image {
+    src: String
+    filename: String
+  }
+
   ${userTypes}
   ${userInputs}
+  ${roomTypes}
 
   ${contactTypes}
   ${contactInputs}
+  ${roomInputs}
 
   scalar Upload
 
@@ -33,11 +46,13 @@ const typeDefs = gql`
   type Query {
     ${userQueries}
     ${contactQueries}
+    ${roomQueries}
   }
 
   type Mutation {
     ${userMutations}
     ${contactMutations}
+    ${roomMutations}
   } 
 `;
 

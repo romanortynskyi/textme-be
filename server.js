@@ -1,3 +1,4 @@
+const firebase = require('firebase-admin');
 const { ApolloServer } = require('apollo-server-express');
 const { graphqlUploadExpress }= require('graphql-upload');
 const { applyMiddleware } = require('graphql-middleware');
@@ -14,6 +15,12 @@ const typeDefs = require('./type-defs');
 const resolvers = require('./resolvers');
 const permissions = require('./permissions');
 const userService = require('./modules/user/user.service');
+
+const serviceAccount = require("./service-account.json");
+
+firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount)
+});
 
 (async () => {
   await connectDB();
