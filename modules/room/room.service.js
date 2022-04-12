@@ -2,7 +2,7 @@ const Room = require('./room.model');
 const RoomMember = require('../../models/room-member.model');
 const uploadService = require('../upload/upload.service');
 
-class ContactService {
+class RoomService {
   async addRoom(input, image) {
     const { name, members } = input;
 
@@ -46,4 +46,4 @@ class ContactService {
   }
 };
 
-module.exports = new ContactService();
+module.exports = new RoomService();

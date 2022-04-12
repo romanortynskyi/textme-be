@@ -3,6 +3,7 @@ const DB_COLLECTIONS_NAMES = {
   CONTACT: 'Contact',
   ROOM: 'Room',
   ROOM_MEMBER: 'RoomMember',
+  MESSAGE: 'Message',
 };
 
 module.exports = {
