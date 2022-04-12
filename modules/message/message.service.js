@@ -1,6 +1,7 @@
 const RuleError = require('../../errors/rule.error');
 const User = require('../../models/user.model');
-const Contact = require('./contact.model');
+const Contact = require('../../models/contact.model');
+const Message = require('./message.model');
 const {
   USER_NOT_FOUND,
 } = require('../../error-messages/user.messages');
@@ -10,7 +11,55 @@ const {
 
 class MessageService {
   async addMessage(input) {
+    const {
+      type,
+      text,
+      roomId,
+      userId,
+    } = input;
+
+    let message = await Message.create({
+      type,
+      text,
+      room: roomId,
+      user: userId,
+    });
+
+    message = await message.populate(['user', 'room']);
+
+    return message._doc;
+  }
+
+  async getMessagesByRoom(id, user) {
+    const myId = user._id;
+
+    const messages = await Message
+      .find({ room: id })
+      .populate(['user', 'room'])
+      .exec();
     
+    const userIds = [...new Set(messages.map((message) => message.user._id))];
+
+    const contacts = await Contact.find({
+      myId,
+      theirId: {
+        '$in': userIds,
+      }
+    }).exec();
+
+    const result = messages.map((message) => {
+      const contact = contacts.find(contact => contact.theirId.toString() === message.user._id.toString())
+
+      const isMine = message.user._id.toString() === myId.toString();
+
+      return {
+        ...message._doc,
+        contact,
+        isMine,
+      };
+    });    
+
+    return result;
   }
 };
 

@@ -1,25 +1,27 @@
 const messageInputs = `
   input MessageInput {
-    firstName: String
-    lastName: String
-    phoneNumber: String
-    myId: ID
+    type: String!
+    text: String
+    roomId: ID!
+    userId: ID!
   }
 `;
 
 const messageTypes = `
   type Message {
     _id: ID!
-    firstName: String!
-    lastName: String!
-    myId: ID!
-    theirId: ID!
+    type: String!
+    text: String!
     user: User!
+    room: Room!
+    contact: Contact
+    createdAt: String!
+    isMine: Boolean!
   }
 `;
 
 const messageQueries = `
-  
+  getMessagesByRoom(id: ID!): [Message!]!
 `;
 
 const messageMutations = `

@@ -12,7 +12,7 @@ const {
 } = require('../../validators/contact.validator');
 
 const messageQueryPermissions = {
-  
+  getMessagesByRoom: hasRoles([USER]),
 };
 
 const messageMutationPermissions = {

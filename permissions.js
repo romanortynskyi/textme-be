@@ -6,7 +6,7 @@ const {
 const {
   contactQueryPermissions,
   contactMutationPermissions,
-} = require('./modules/user/user.permissions');
+} = require('./modules/contact/contact.permissions');
 
 const permissions = shield(
   {

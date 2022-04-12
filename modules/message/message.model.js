@@ -5,6 +5,9 @@ const {
 } = require('../../consts/db-collection-names');
 
 const messageSchema = mongoose.Schema({
+  type: {
+    type: String,
+  },
   text: {
     type: String,
   },
@@ -16,6 +19,8 @@ const messageSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: ROOM,
   },
+}, {
+  timestamps: true,
 });
 
 module.exports = mongoose.model(MESSAGE, messageSchema);

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const {
   DB_COLLECTIONS_NAMES: { CONTACT, USER: USER_COLLECTION },
-} = require('../../consts/db-collection-names');
+} = require('../consts/db-collection-names');
 
 const contactSchema = new mongoose.Schema({
   myId: {

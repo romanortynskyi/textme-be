@@ -4,7 +4,7 @@ const {
   hasRoles,
 } = require('../../utils/rules');
 const {
-  roles: { USER },
+  roles: { USER, ADMIN },
 } = require('../../consts');
 
 const {
