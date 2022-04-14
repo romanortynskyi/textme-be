@@ -20,6 +20,7 @@ const contactTypes = `
 
 const contactQueries = `
   getContactsByUser(id: ID!): [Contact]
+  getContact(theirId: ID!): Contact
 `;
 
 const contactMutations = `

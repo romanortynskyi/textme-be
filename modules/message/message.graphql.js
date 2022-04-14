@@ -28,9 +28,14 @@ const messageMutations = `
   addMessage(input: MessageInput!): Message
 `;
 
+const messageSubscriptions = `
+  messageCreated(userId: ID!): Message
+`;
+
 module.exports = {
   messageInputs,
   messageTypes,
   messageQueries,
   messageMutations,
+  messageSubscriptions,
 };

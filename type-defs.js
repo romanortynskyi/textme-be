@@ -23,6 +23,7 @@ const {
   messageInputs,
   messageQueries,
   messageMutations,
+  messageSubscriptions,
 } = require('./modules/message/message.graphql');
 
 
@@ -63,6 +64,10 @@ const typeDefs = gql`
     ${contactMutations}
     ${roomMutations}
     ${messageMutations}
+  }
+
+  type Subscription {
+    ${messageSubscriptions}
   }
 `;
 

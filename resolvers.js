@@ -3,7 +3,11 @@ const { GraphQLUpload } = require('graphql-upload');
 const { userQuery, userMutation } = require('./modules/user/user.resolver');
 const { contactQuery, contactMutation } = require('./modules/contact/contact.resolver');
 const { roomQuery, roomMutation } = require('./modules/room/room.resolver'); 
-const { messageQuery, messageMutation } = require('./modules/message/message.resolver');
+const {
+  messageQuery,
+  messageMutation,
+  messageSubscription,
+} = require('./modules/message/message.resolver');
 
 const userService = require('./modules/user/user.service');
 
@@ -20,6 +24,9 @@ const resolvers = {
     ...contactMutation,
     ...roomMutation,
     ...messageMutation
+  },
+  Subscription: {
+    ...messageSubscription,
   },
   Contact: {
     user: (parent) => userService.getUserById(parent.theirId),

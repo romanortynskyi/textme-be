@@ -1,3 +1,8 @@
+const { createServer } = require('http');
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
+const { WebSocketServer } = require('ws');
+const { useServer } = require('graphql-ws/lib/use/ws');
+
 const firebase = require('firebase-admin');
 const { ApolloServer } = require('apollo-server-express');
 const { graphqlUploadExpress }= require('graphql-upload');
@@ -25,10 +30,24 @@ firebase.initializeApp({
 (async () => {
   await connectDB();
 
+  const app = express();
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
+  app.use(cors());
+
+  const httpServer = createServer(app);
+  
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: '/graphql',
+  });
+
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers,
   });
+
+  const serverCleanup = useServer({ schema }, wsServer);
 
   const server = new ApolloServer({
     introspection: true,
@@ -40,14 +59,23 @@ firebase.initializeApp({
       };
     },
     cors: { origin: '*' },
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              await serverCleanup.dispose();
+            },
+          };
+        },
+      },
+    ],
   });
   
   const PORT = process.env.PORT || 5050;
   
-  const app = express();
-  app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
-  app.use(cors());
+  
   
   // app.get('/translations', translationsService.getAllTranslations);
   
@@ -64,7 +92,7 @@ firebase.initializeApp({
     },
   });
   
-  app.listen(PORT, () => {
+  httpServer.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
   });
 })();

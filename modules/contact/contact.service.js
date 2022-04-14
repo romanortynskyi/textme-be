@@ -42,6 +42,12 @@ class ContactService {
 
     return Contact.find({ myId: id }).exec();
   }
+
+  async getContact(theirId, myId) {
+    const contact = await Contact.findOne({ theirId, myId }).exec();
+
+    return contact;
+  }
 };
 
 module.exports = new ContactService();

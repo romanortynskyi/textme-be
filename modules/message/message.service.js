@@ -8,6 +8,7 @@ const {
 const {
   STATUS_CODES: { BAD_REQUEST },
 } = require('../../consts/status-codes');
+const pubsub = require('../../pubsub');
 
 class MessageService {
   async addMessage(input) {
@@ -26,6 +27,12 @@ class MessageService {
     });
 
     message = await message.populate(['user', 'room']);
+
+    pubsub.publish('MESSAGE_CREATED', {
+      messageCreated: {
+        ...message._doc,
+      },
+    });
 
     return message._doc;
   }

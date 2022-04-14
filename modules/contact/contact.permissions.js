@@ -13,6 +13,7 @@ const {
 
 const contactQueryPermissions = {
   getContactsByUser: hasRoles([USER, ADMIN]),
+  getContact: hasRoles([USER]),
 };
 
 const contactMutationPermissions = {
