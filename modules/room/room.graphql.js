@@ -10,6 +10,7 @@ const roomTypes = `
     _id: ID!
     name: String!
     image: Image
+    latestMessage: Message
   }
 `;
 

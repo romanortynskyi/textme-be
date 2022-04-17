@@ -1,4 +1,4 @@
-const Room = require('./room.model');
+const Room = require('../../models/room.model');
 const RoomMember = require('../../models/room-member.model');
 const uploadService = require('../upload/upload.service');
 
@@ -40,7 +40,9 @@ class RoomService {
   }
 
   async getRoomById(id) {
-    const room = await Room.findById(id).exec();
+    const room = await Room
+      .findById(id)
+      .exec();
 
     return room;
   }

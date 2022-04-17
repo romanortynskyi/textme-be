@@ -1,6 +1,7 @@
 const RuleError = require('../../errors/rule.error');
 const User = require('../../models/user.model');
 const Contact = require('../../models/contact.model');
+const Room = require('../../models/room.model');
 const Message = require('./message.model');
 const {
   USER_NOT_FOUND,
@@ -19,6 +20,8 @@ class MessageService {
       userId,
     } = input;
 
+    const room = await Room.findById(roomId).exec();
+
     let message = await Message.create({
       type,
       text,
@@ -27,6 +30,10 @@ class MessageService {
     });
 
     message = await message.populate(['user', 'room']);
+
+    room.latestMessage = message._id;
+
+    await room.save();
 
     pubsub.publish('MESSAGE_CREATED', {
       messageCreated: {
@@ -67,6 +74,15 @@ class MessageService {
     });    
 
     return result;
+  }
+
+  async getMessageById(id) {
+    const message = await Message
+      .findById(id)
+      .populate('user')
+      .exec();
+
+    return message;
   }
 };
 

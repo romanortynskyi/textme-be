@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const {
-  DB_COLLECTIONS_NAMES: { ROOM },
-} = require('../../consts/db-collection-names');
+  DB_COLLECTIONS_NAMES: { ROOM, MESSAGE },
+} = require('../consts/db-collection-names');
 
 const roomSchema = new mongoose.Schema({
   name: {
@@ -15,6 +15,11 @@ const roomSchema = new mongoose.Schema({
     filename: {
       type: String,
     },
+  },
+  latestMessage: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: MESSAGE,
+    default: null,
   },
 });
 

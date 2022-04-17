@@ -24,7 +24,9 @@ const messageSubscription = {
           room: payload.messageCreated.room._id,
         }).exec();
 
-        const shouldSend = !!roomMember;
+        const isMine = payload.messageCreated.user._id === userId;
+
+        const shouldSend = !!roomMember || !isMine;
         return shouldSend;
       },
     ),

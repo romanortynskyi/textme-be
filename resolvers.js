@@ -10,6 +10,8 @@ const {
 } = require('./modules/message/message.resolver');
 
 const userService = require('./modules/user/user.service');
+const messageService = require('./modules/message/message.service');
+const contactService = require('./modules/contact/contact.service');
 
 const resolvers = {
   Upload: GraphQLUpload,
@@ -30,6 +32,15 @@ const resolvers = {
   },
   Contact: {
     user: (parent) => userService.getUserById(parent.theirId),
+  },
+  Room: {
+    latestMessage: (parent) => messageService.getMessageById(parent.latestMessage),
+  },
+  Message: {
+    contact: (parent, _, context) => contactService.getContact(parent.user._id, context.user._id),
+    isMine: (parent, _, context) => {
+      return parent.user._id.toString() === context.user._id.toString()
+    },
   },
 };
 
