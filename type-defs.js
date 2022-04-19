@@ -25,6 +25,12 @@ const {
   messageMutations,
   messageSubscriptions,
 } = require('./modules/message/message.graphql');
+const {
+  readMessageTypes,
+  readMessageInputs,
+  readMessageQueries,
+  readMessageMutations,
+} = require('./modules/read-message/read-message.graphql');
 
 
 const { skip, limit } = defaultPaginationParams;
@@ -36,14 +42,16 @@ const typeDefs = gql`
   }
 
   ${userTypes}
-  ${userInputs}
+  ${contactTypes}
   ${roomTypes}
   ${messageTypes}
+  ${readMessageTypes}
 
-  ${contactTypes}
+  ${userInputs}
   ${contactInputs}
   ${roomInputs}
   ${messageInputs}
+  ${readMessageInputs}
 
   scalar Upload
 
@@ -57,6 +65,7 @@ const typeDefs = gql`
     ${contactQueries}
     ${roomQueries}
     ${messageQueries}
+    ${readMessageQueries}
   }
 
   type Mutation {
@@ -64,6 +73,7 @@ const typeDefs = gql`
     ${contactMutations}
     ${roomMutations}
     ${messageMutations}
+    ${readMessageMutations}
   }
 
   type Subscription {
