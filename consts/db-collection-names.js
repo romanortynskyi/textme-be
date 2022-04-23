@@ -4,6 +4,7 @@ const DB_COLLECTIONS_NAMES = {
   ROOM: 'Room',
   ROOM_MEMBER: 'RoomMember',
   MESSAGE: 'Message',
+  READ_MESSAGE: 'ReadMessage',
 };
 
 module.exports = {

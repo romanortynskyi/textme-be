@@ -8,10 +8,12 @@ const {
   messageMutation,
   messageSubscription,
 } = require('./modules/message/message.resolver');
+const { readMessageMutation } = require('./modules/read-message/read-message.resolver');
 
 const userService = require('./modules/user/user.service');
 const messageService = require('./modules/message/message.service');
 const contactService = require('./modules/contact/contact.service');
+const readMessageService = require('./modules/read-message/read-message.service');
 
 const resolvers = {
   Upload: GraphQLUpload,
@@ -25,7 +27,8 @@ const resolvers = {
     ...userMutation,
     ...contactMutation,
     ...roomMutation,
-    ...messageMutation
+    ...messageMutation,
+    ...readMessageMutation,
   },
   Subscription: {
     ...messageSubscription,
@@ -41,6 +44,7 @@ const resolvers = {
     isMine: (parent, _, context) => {
       return parent.user._id.toString() === context.user._id.toString()
     },
+    myRead: (parent, _, context) => readMessageService.getReadMessage(parent._id, context.user._id),
   },
 };
 

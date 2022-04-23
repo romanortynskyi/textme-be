@@ -1,6 +1,6 @@
 const RuleError = require('../../errors/rule.error');
 const User = require('../../models/user.model');
-const Contact = require('../../models/contact.model');
+const ReadMessage = require('../../models/read-message.model');
 const {
   USER_NOT_FOUND,
 } = require('../../error-messages/user.messages');
@@ -21,7 +21,21 @@ class ReadMessageService {
       throw new RuleError(USER_NOT_FOUND, BAD_REQUEST);
     }
 
-    
+    const readMessage = await ReadMessage.create({
+      user: userId,
+      message: messageId,
+    });
+
+    return readMessage;
+  }
+
+  async getReadMessage(messageId, userId) {
+    const readMessage = await ReadMessage.findOne({
+      user: userId,
+      message: messageId,
+    }).exec();
+
+    return readMessage;
   }
 };
 

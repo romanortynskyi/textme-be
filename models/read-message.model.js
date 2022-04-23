@@ -6,11 +6,11 @@ const {
 
 const readMessageSchema = mongoose.Schema({
   message: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: MESSAGE,
   },
   user: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: USER,
   },
 }, { timestamps: true });

@@ -17,6 +17,7 @@ const messageTypes = `
     contact: Contact
     createdAt: String!
     isMine: Boolean!
+    myRead: ReadMessage
   }
 `;
 
