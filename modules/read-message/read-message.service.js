@@ -13,6 +13,7 @@ class ReadMessageService {
     const {
       userId,
       messageId,
+      roomId,
     } = input;
 
     const user = await User.findOne({ _id: userId }).exec();
@@ -24,6 +25,7 @@ class ReadMessageService {
     const readMessage = await ReadMessage.create({
       user: userId,
       message: messageId,
+      room: roomId,
     });
 
     return readMessage;

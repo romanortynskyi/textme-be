@@ -1,7 +1,8 @@
 const readMessageInputs = `
   input ReadMessageInput {
-    userId: String
-    messageId: String
+    userId: String!
+    messageId: String!
+    roomId: String!
   }
 `;
 

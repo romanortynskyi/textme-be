@@ -2,7 +2,7 @@ const RuleError = require('../../errors/rule.error');
 const User = require('../../models/user.model');
 const Contact = require('../../models/contact.model');
 const Room = require('../../models/room.model');
-const Message = require('./message.model');
+const Message = require('../../models/message.model');
 const {
   USER_NOT_FOUND,
 } = require('../../error-messages/user.messages');

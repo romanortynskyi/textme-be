@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const {
   DB_COLLECTIONS_NAMES: { ROOM, MESSAGE, USER },
-} = require('../../consts/db-collection-names');
+} = require('../consts/db-collection-names');
 
 const messageSchema = mongoose.Schema({
   type: {

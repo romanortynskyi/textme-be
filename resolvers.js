@@ -14,6 +14,7 @@ const userService = require('./modules/user/user.service');
 const messageService = require('./modules/message/message.service');
 const contactService = require('./modules/contact/contact.service');
 const readMessageService = require('./modules/read-message/read-message.service');
+const roomService = require('./modules/room/room.service');
 
 const resolvers = {
   Upload: GraphQLUpload,
@@ -38,6 +39,7 @@ const resolvers = {
   },
   Room: {
     latestMessage: (parent) => messageService.getMessageById(parent.latestMessage),
+    unreadMessagesCount: (parent, _, context) => roomService.getUnreadMessagesCountByRoom(parent._id, context.user._id)
   },
   Message: {
     contact: (parent, _, context) => contactService.getContact(parent.user._id, context.user._id),

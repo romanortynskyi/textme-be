@@ -1,5 +1,7 @@
 const Room = require('../../models/room.model');
+const Message = require('../../models/message.model');
 const RoomMember = require('../../models/room-member.model');
+const ReadMessage = require('../../models/read-message.model');
 const uploadService = require('../upload/upload.service');
 
 class RoomService {
@@ -45,6 +47,50 @@ class RoomService {
       .exec();
 
     return room;
+  }
+
+  async getUnreadMessagesCountByRoom(id, userId) {
+    const filters = {
+      user: userId,
+      room: id,
+    };
+
+    const lastReadMessage = await ReadMessage
+      .findOne(filters, {}, { createdAt: -1 })
+      .exec();
+    
+    if(lastReadMessage) {
+      const unreadMessagesFilters = {
+        room: id,
+        user: {
+          $ne: userId,
+        },
+        createdAt: {
+          $gt: lastReadMessage.createdAt,
+        },
+      };
+      
+      const unreadMessages = await Message
+        .find(unreadMessagesFilters)
+        .exec();
+
+      return unreadMessages.length;
+    }
+
+    else {
+      const filters = {
+        room: id,
+        user: {
+          $ne: userId,  
+        },
+      };
+
+      const unreadMessagesCount = await Message
+        .find(filters)
+        .countDocuments();
+
+      return unreadMessagesCount;
+    }
   }
 };
 

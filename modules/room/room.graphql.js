@@ -11,6 +11,7 @@ const roomTypes = `
     name: String!
     image: Image
     latestMessage: Message
+    unreadMessagesCount: Int!
   }
 `;
 

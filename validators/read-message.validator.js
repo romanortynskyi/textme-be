@@ -7,6 +7,9 @@ const createReadMessageValidator = Joi.object({
   userId: Joi.string()
     .min(1)
     .required(),
+  roomId: Joi.string()
+    .min(1)
+    .required(),
 });
 
 module.exports = {
