@@ -18,15 +18,16 @@ const messageSubscription = {
       () => pubsub.asyncIterator('MESSAGE_CREATED'),
       async (payload, variables) => {
         const { userId } = variables;
+        const { room } = payload.messageCreated;
 
         const roomMember = await RoomMember.findOne({
           userId,
-          room: payload.messageCreated.room._id,
+          room: room._id,
         }).exec();
 
         const isMine = payload.messageCreated.user._id.toString() === userId;
-
         const shouldSend = !!roomMember && !isMine;
+
         return shouldSend;
       },
     ),

@@ -9,10 +9,11 @@ const roomInputs = `
 const roomTypes = `
   type Room {
     _id: ID!
-    name: String!
+    name: String
     image: Image
     latestMessage: Message
     unreadMessagesCount: Int!
+    isPrivate: Boolean!
   }
 `;
 
