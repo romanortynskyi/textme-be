@@ -3,6 +3,7 @@ const Message = require('../../models/message.model');
 const RoomMember = require('../../models/room-member.model');
 const ReadMessage = require('../../models/read-message.model');
 const User = require('../../models/user.model');
+const Contact = require('../../models/contact.model');
 const uploadService = require('../upload/upload.service');
 
 class RoomService {
@@ -51,9 +52,25 @@ class RoomService {
             },
           })
           .exec();
+
+        let name;
+
+        const contact = await Contact.findOne({
+          myId: id,
+          theirId: otherMember.userId,
+        }).exec();
+    
+        if (contact) {
+          name = `${contact.firstName} ${contact.lastName}`;
+    
+          return {
+            ...roomMember._doc.room._doc,
+            name,
+          };
+        }
+
         const them = await User.findById(otherMember.userId).exec();
-        
-        const name = `${them.firstName} ${them.lastName}`;
+        name = `${them.firstName} ${them.lastName}`;
         
         return {
           ...roomMember._doc.room._doc,
@@ -83,13 +100,29 @@ class RoomService {
       })
       .exec();
 
+      let name;
+
+      const contact = await Contact.findOne({
+        myId,
+        theirId: otherMember.userId,
+      }).exec();
+
+      if (contact) {
+        name = `${contact.firstName} ${contact.lastName}`;
+
+        return {
+          ...room._doc,
+          name,
+        };
+      }
+
       const them = await User.findById(otherMember.userId).exec();
-      const name = `${them.firstName} ${them.lastName}`;
+      name = `${them.firstName} ${them.lastName}`;
 
       return {
-        ...room._doc,
-        name,
-      };
+          ...room._doc,
+          name,
+        };
     }
 
     return room;
