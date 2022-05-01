@@ -5,7 +5,7 @@ const readMessageQuery = {
 };
 
 const readMessageMutation = {
-  addReadMessage: (_, args) => readMessageService.addReadMessage(args.input),
+  addReadMessages: (_, args) => readMessageService.addReadMessages(args.input),
 };
 
 module.exports = {

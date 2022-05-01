@@ -21,6 +21,10 @@ const roomSchema = new mongoose.Schema({
     ref: MESSAGE,
     default: null,
   },
+  isPrivate: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model(ROOM, roomSchema);

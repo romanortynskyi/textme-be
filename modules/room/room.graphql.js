@@ -1,7 +1,8 @@
 const roomInputs = `
   input RoomInput {
-    name: String!
+    name: String
     members: [String!]!
+    isPrivate: Boolean!
   }
 `;
 

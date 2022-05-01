@@ -17,7 +17,7 @@ const readMessageQueries = `
 `;
 
 const readMessageMutations = `
-  addReadMessage(input: ReadMessageInput!): ReadMessage
+  addReadMessages(input: [ReadMessageInput!]!): [ReadMessage]
 `;
 
 module.exports = {

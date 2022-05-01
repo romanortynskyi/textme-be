@@ -16,9 +16,9 @@ const readMessageQueryPermissions = {
 };
 
 const readMessageMutationPermissions = {
-  addReadMessage: and(
+  addReadMessages: and(
     hasRoles([USER]),
-    inputDataValidation(createReadMessageValidator),
+    // inputDataValidation(createReadMessageValidator),
   ),
 };
 

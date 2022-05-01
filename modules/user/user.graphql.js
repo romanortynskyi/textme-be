@@ -43,6 +43,7 @@ const userQueries = `
     sort: UserSortInput
   ): PaginatedUsers!
   getUserById(id: ID!): User
+  getUserByPhoneNumber(phoneNumber: String!): User
   getCurrentUser: User
 `;
 

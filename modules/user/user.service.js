@@ -105,6 +105,12 @@ class UserService {
     };
   }
 
+  async getUserByPhoneNumber(phoneNumber) {
+    const user = await this.getUserByFieldOrThrow('phoneNumber', phoneNumber);
+
+    return user;
+  }
+
   async updateUser(id, updatedUser) {
     const user = await this.getUserByFieldOrThrow('_id', id);
 

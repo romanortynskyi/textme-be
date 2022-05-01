@@ -3,7 +3,7 @@ const {
   hasRoles,
 } = require('../../utils/rules');
 const {
-  roles: { ADMIN },
+  roles: { ADMIN, USER },
 } = require('../../consts');
 const {
   createUserValidator,
@@ -14,6 +14,7 @@ const {
 const userQueryPermissions = {
   getAllUsers: hasRoles([ADMIN]),
   getUserById: hasRoles([ADMIN]),
+  getUserByPhoneNumber: hasRoles([USER]),
 };
 
 const userMutationPermissions = {

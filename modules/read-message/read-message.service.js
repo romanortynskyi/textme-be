@@ -9,26 +9,24 @@ const {
 } = require('../../consts/status-codes');
 
 class ReadMessageService {
-  async addReadMessage(input) {
-    const {
-      userId,
-      messageId,
-      roomId,
-    } = input;
+  async addReadMessages(input) {
+    const items = input;
 
-    const user = await User.findOne({ _id: userId }).exec();
+    const user = await User.findOne({ _id: items[0].userId }).exec();
 
     if (!user) {
       throw new RuleError(USER_NOT_FOUND, BAD_REQUEST);
     }
 
-    const readMessage = await ReadMessage.create({
-      user: userId,
-      message: messageId,
-      room: roomId,
-    });
+    const itemsToInsert = items.map((item) => ({
+      user: item.userId,
+      room: item.roomId,
+      message: item.messageId,
+    }));
 
-    return readMessage;
+    const readMessages = await ReadMessage.insertMany(itemsToInsert);
+
+    return readMessages;
   }
 
   async getReadMessage(messageId, userId) {

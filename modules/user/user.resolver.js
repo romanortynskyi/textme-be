@@ -3,6 +3,7 @@ const userService = require('./user.service');
 const userQuery = {
   getAllUsers: (_, args) => userService.getAllUsers(args),
   getUserById: (_, args) => userService.getUserById(args.id),
+  getUserByPhoneNumber: (_, args) => userService.getUserByPhoneNumber(args.phoneNumber),
   getCurrentUser: (_, __, context) => context.user,
 };
 
