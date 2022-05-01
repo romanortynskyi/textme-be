@@ -5,11 +5,11 @@ const {
 
 const roomMemberSchema = new mongoose.Schema({
   room: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: ROOM,
   },
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: USER,
   },
 });

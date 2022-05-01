@@ -26,7 +26,7 @@ const messageSubscription = {
 
         const isMine = payload.messageCreated.user._id.toString() === userId;
 
-        const shouldSend = !!roomMember || !isMine;
+        const shouldSend = !!roomMember && !isMine;
         return shouldSend;
       },
     ),

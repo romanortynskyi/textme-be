@@ -41,7 +41,7 @@ class RoomService {
       .populate('room')
       .exec();
 
-    const rooms = roomMembers.map(async (roomMember) => {
+    const rooms = await Promise.all(roomMembers.map(async (roomMember) => {
       if (roomMember.room.isPrivate) {
         const roomId = roomMember.room._id;
         const otherMember = await RoomMember
@@ -81,7 +81,7 @@ class RoomService {
       return {
         ...roomMember._doc.room._doc,
       };
-    });
+    }));
 
     return rooms;
   }
