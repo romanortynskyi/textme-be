@@ -19,6 +19,9 @@ const messageSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: ROOM,
   },
+  gifId: {
+    type: String,
+  },
 }, {
   timestamps: true,
 });

@@ -12,9 +12,8 @@ const {
 const pubsub = require('../../pubsub');
 
 class MessageService {
-  async addMessage(input) {
+  async addMessage(type, input) {
     const {
-      type,
       text,
       roomId,
       userId,
@@ -25,6 +24,68 @@ class MessageService {
     let message = await Message.create({
       type,
       text,
+      room: roomId,
+      user: userId,
+    });
+
+    message = await message.populate(['user', 'room']);
+
+    room.latestMessage = message._id;
+
+    await room.save();
+
+    pubsub.publish('MESSAGE_CREATED', {
+      messageCreated: {
+        ...message._doc,
+      },
+    });
+
+    return message._doc;
+  }
+
+  async addTextMessage(input) {
+    const {
+      text,
+      roomId,
+      userId,
+    } = input;
+
+    const room = await Room.findById(roomId).exec();
+
+    let message = await Message.create({
+      type: 'text',
+      text,
+      room: roomId,
+      user: userId,
+    });
+
+    message = await message.populate(['user', 'room']);
+
+    room.latestMessage = message._id;
+
+    await room.save();
+
+    pubsub.publish('MESSAGE_CREATED', {
+      messageCreated: {
+        ...message._doc,
+      },
+    });
+
+    return message._doc;
+  }
+
+  async addGifMessage(input) {
+    const {
+      gifId,
+      roomId,
+      userId,
+    } = input;
+
+    const room = await Room.findById(roomId).exec();
+
+    let message = await Message.create({
+      type: 'gif',
+      gifId,
       room: roomId,
       user: userId,
     });

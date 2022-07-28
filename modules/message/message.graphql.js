@@ -5,10 +5,22 @@ const messageInputs = `
     roomId: ID!
     userId: ID!
   }
+
+  input TextMessageInput {
+    text: String!
+    roomId: ID!
+    userId: ID!
+  }
+
+  input GifMessageInput {
+    gifId: String!
+    roomId: ID!
+    userId: ID!
+  }
 `;
 
 const messageTypes = `
-  type Message {
+  type TextMessage {
     _id: ID!
     type: String!
     text: String!
@@ -19,6 +31,20 @@ const messageTypes = `
     isMine: Boolean!
     myRead: ReadMessage
   }
+
+  type GifMessage {
+    _id: ID!
+    type: String!
+    gifId: String!
+    user: User!
+    room: Room!
+    contact: Contact
+    createdAt: String!
+    isMine: Boolean!
+    myRead: ReadMessage
+  }
+
+  union Message = TextMessage | GifMessage
 `;
 
 const messageQueries = `
@@ -26,7 +52,8 @@ const messageQueries = `
 `;
 
 const messageMutations = `
-  addMessage(input: MessageInput!): Message
+  addTextMessage(input: TextMessageInput!): Message
+  addGifMessage(input: GifMessageInput!): Message
 `;
 
 const messageSubscriptions = `

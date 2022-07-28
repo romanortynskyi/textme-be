@@ -9,6 +9,9 @@ const {
 
 const {
   createMessageValidator,
+
+  createTextMessageValidator,
+  createGifMessageValidator,
 } = require('../../validators/contact.validator');
 
 const messageQueryPermissions = {
@@ -16,9 +19,13 @@ const messageQueryPermissions = {
 };
 
 const messageMutationPermissions = {
-  addMessage: and(
+  addTextMessage: and(
     hasRoles([USER]),
-    inputDataValidation(createMessageValidator),
+    inputDataValidation(createTextMessageValidator),
+  ),
+  addGifMessage: and(
+    hasRoles([USER]),
+    inputDataValidation(createGifMessageValidator),
   ),
 };
 

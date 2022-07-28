@@ -41,12 +41,25 @@ const resolvers = {
     latestMessage: (parent) => messageService.getMessageById(parent.latestMessage),
     unreadMessagesCount: (parent, _, context) => roomService.getUnreadMessagesCountByRoom(parent._id, context.user._id)
   },
-  Message: {
+  TextMessage: {
     contact: (parent, _, context) => contactService.getContact(parent.user._id, context.user._id),
     isMine: (parent, _, context) => {
       return parent.user._id.toString() === context.user._id.toString()
     },
     myRead: (parent, _, context) => readMessageService.getReadMessage(parent._id, context.user._id),
+  },
+  GifMessage: {
+    contact: (parent, _, context) => contactService.getContact(parent.user._id, context.user._id),
+    isMine: (parent, _, context) => {
+      return parent.user._id.toString() === context.user._id.toString()
+    },
+    myRead: (parent, _, context) => readMessageService.getReadMessage(parent._id, context.user._id),
+  },
+  Message: {
+    __resolveType(obj , context , info){
+      if (obj.type === 'text') return 'TextMessage';
+      if (obj.type === 'gif') return 'GifMessage';
+    }
   },
 };
 

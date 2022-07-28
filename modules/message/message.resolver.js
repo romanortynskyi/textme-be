@@ -9,7 +9,8 @@ const messageQuery = {
 };
 
 const messageMutation = {
-  addMessage: (_, args) => messageService.addMessage(args.input),
+  addTextMessage: (_, args) => messageService.addTextMessage(args.input),
+  addGifMessage: (_, args) => messageService.addGifMessage(args.input),
 };
 
 const messageSubscription = {
